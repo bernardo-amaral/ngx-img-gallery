@@ -12,25 +12,31 @@ import {
   Output,
   Renderer2,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {DomSanitizer, SafeResourceUrl, SafeStyle, SafeUrl} from '@angular/platform-browser';
-import {NgxGalleryService} from '../ngx-gallery.service';
-import {NgxGalleryAction} from '../ngx-gallery-action';
-
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeStyle,
+  SafeUrl,
+} from '@angular/platform-browser';
+import { NgxGalleryService } from '../ngx-gallery.service';
+import { NgxGalleryAction } from '../ngx-gallery-action';
 
 @Component({
   selector: 'ngx-gallery-preview',
   templateUrl: './ngx-gallery-preview.component.html',
   styleUrls: ['./ngx-gallery-preview.component.scss'],
   // encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges {
-  src: SafeUrl;
-  srcIndex: number;
-  description: string;
-  type: string;
+export class NgxGalleryPreviewComponent
+  implements OnInit, OnDestroy, OnChanges
+{
+  src: SafeUrl = '';
+  srcIndex: number = 0;
+  description: string = '';
+  type: string = '';
   showSpinner = false;
   positionLeft = 0;
   positionTop = 0;
@@ -39,40 +45,40 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   rotateValue = 0;
   index = 0;
 
-  @Input() images: string[] | SafeResourceUrl[];
-  @Input() descriptions: string[];
-  @Input() showDescription: boolean;
-  @Input() arrows: boolean;
-  @Input() arrowsAutoHide: boolean;
-  @Input() swipe: boolean;
-  @Input() fullscreen: boolean;
-  @Input() forceFullscreen: boolean;
-  @Input() closeOnClick: boolean;
-  @Input() closeOnEsc: boolean;
-  @Input() keyboardNavigation: boolean;
-  @Input() arrowPrevIcon: string;
-  @Input() arrowNextIcon: string;
-  @Input() closeIcon: string;
-  @Input() fullscreenIcon: string;
-  @Input() spinnerIcon: string;
-  @Input() autoPlay: boolean;
-  @Input() autoPlayInterval: number;
-  @Input() autoPlayPauseOnHover: boolean;
-  @Input() infinityMove: boolean;
-  @Input() zoom: boolean;
-  @Input() zoomStep: number;
-  @Input() zoomMax: number;
-  @Input() zoomMin: number;
-  @Input() zoomInIcon: string;
-  @Input() zoomOutIcon: string;
-  @Input() animation: boolean;
-  @Input() actions: NgxGalleryAction[];
-  @Input() rotate: boolean;
-  @Input() rotateLeftIcon: string;
-  @Input() rotateRightIcon: string;
-  @Input() download: boolean;
-  @Input() downloadIcon: string;
-  @Input() bullets: boolean;
+  @Input() images: string[] | SafeResourceUrl[] = [];
+  @Input() descriptions: string[] = [];
+  @Input() showDescription: boolean = false;
+  @Input() arrows: boolean = false;
+  @Input() arrowsAutoHide: boolean = false;
+  @Input() swipe: boolean = false;
+  @Input() fullscreen: boolean = false;
+  @Input() forceFullscreen: boolean = false;
+  @Input() closeOnClick: boolean = false;
+  @Input() closeOnEsc: boolean = false;
+  @Input() keyboardNavigation: boolean = false;
+  @Input() arrowPrevIcon: string = '';
+  @Input() arrowNextIcon: string = '';
+  @Input() closeIcon: string = '';
+  @Input() fullscreenIcon: string = '';
+  @Input() spinnerIcon: string = '';
+  @Input() autoPlay: boolean = false;
+  @Input() autoPlayInterval: number = 0;
+  @Input() autoPlayPauseOnHover: boolean = false;
+  @Input() infinityMove: boolean = false;
+  @Input() zoom: boolean = false;
+  @Input() zoomStep: number = 0;
+  @Input() zoomMax: number = 0;
+  @Input() zoomMin: number = 0;
+  @Input() zoomInIcon: string = '';
+  @Input() zoomOutIcon: string = '';
+  @Input() animation: boolean = false;
+  @Input() actions: NgxGalleryAction[] = [];
+  @Input() rotate: boolean = false;
+  @Input() rotateLeftIcon: string = '';
+  @Input() rotateRightIcon: string = '';
+  @Input() download: boolean = false;
+  @Input() downloadIcon: string = '';
+  @Input() bullets: boolean = false;
 
   @Output() previewOpen = new EventEmitter();
   @Output() previewClose = new EventEmitter();
@@ -81,19 +87,22 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   @ViewChild('previewImage') previewImage: any;
 
   private isOpen = false;
-  private timer;
+  private timer: any;
   private initialX = 0;
   private initialY = 0;
   private initialLeft = 0;
   private initialTop = 0;
   private isMove = false;
 
-  private keyDownListener: () => void;
+  private keyDownListener: any;
 
-  constructor(private sanitization: DomSanitizer, private elementRef: ElementRef,
-              private helperService: NgxGalleryService, private renderer: Renderer2,
-              private changeDetectorRef: ChangeDetectorRef) {
-  }
+  constructor(
+    private sanitization: DomSanitizer,
+    private elementRef: ElementRef,
+    private helperService: NgxGalleryService,
+    private renderer: Renderer2,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     if (this.arrows && this.arrowsAutoHide) {
@@ -103,8 +112,13 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['swipe']) {
-      this.helperService.manageSwipe(this.swipe, this.elementRef,
-        'preview', () => this.showNext(), () => this.showPrev());
+      this.helperService.manageSwipe(
+        this.swipe,
+        this.elementRef,
+        'preview',
+        () => this.showNext(),
+        () => this.showPrev()
+      );
     }
   }
 
@@ -126,7 +140,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     }
   }
 
-  onKeyDown(e) {
+  onKeyDown(e: any) {
     if (this.isOpen) {
       if (this.keyboardNavigation) {
         if (this.isKeyboardPrev(e)) {
@@ -152,7 +166,9 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
       this.manageFullscreen();
     }
 
-    this.keyDownListener = this.renderer.listen('window', 'keydown', (e) => this.onKeyDown(e));
+    this.keyDownListener = this.renderer.listen('window', 'keydown', (e) =>
+      this.onKeyDown(e)
+    );
   }
 
   close(): void {
@@ -263,8 +279,12 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     if (this.fullscreen || this.forceFullscreen) {
       const doc = document as any;
 
-      if (!doc.fullscreenElement && !doc.mozFullScreenElement
-        && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+      if (
+        !doc.fullscreenElement &&
+        !doc.mozFullScreenElement &&
+        !doc.webkitFullscreenElement &&
+        !doc.msFullscreenElement
+      ) {
         this.openFullscreen();
       } else {
         this.closeFullscreen();
@@ -313,7 +333,9 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   getTransform(): SafeStyle {
-    return this.sanitization.bypassSecurityTrustStyle('scale(' + this.zoomValue + ') rotate(' + this.rotateValue + 'deg)');
+    return this.sanitization.bypassSecurityTrustStyle(
+      'scale(' + this.zoomValue + ') rotate(' + this.rotateValue + 'deg)'
+    );
   }
 
   canZoomIn(): boolean {
@@ -328,7 +350,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     return this.zoom && this.zoomValue > 1;
   }
 
-  mouseDownHandler(e): void {
+  mouseDownHandler(e: any): void {
     if (this.canDragOnZoom()) {
       this.initialX = this.getClientX(e);
       this.initialY = this.getClientY(e);
@@ -340,22 +362,23 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     }
   }
 
-  mouseUpHandler(e): void {
+  mouseUpHandler(_e: any): void {
     this.isMove = false;
   }
 
-  mouseMoveHandler(e) {
+  mouseMoveHandler(e: any) {
     if (this.isMove) {
-      this.positionLeft = this.initialLeft + (this.getClientX(e) - this.initialX);
+      this.positionLeft =
+        this.initialLeft + (this.getClientX(e) - this.initialX);
       this.positionTop = this.initialTop + (this.getClientY(e) - this.initialY);
     }
   }
 
-  private getClientX(e): number {
+  private getClientX(e: any): number {
     return e.touches && e.touches.length ? e.touches[0].clientX : e.clientX;
   }
 
-  private getClientY(e): number {
+  private getClientY(e: any): number {
     return e.touches && e.touches.length ? e.touches[0].clientY : e.clientY;
   }
 
@@ -366,15 +389,15 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     }
   }
 
-  private isKeyboardNext(e): boolean {
+  private isKeyboardNext(e: any): boolean {
     return e.keyCode === 39;
   }
 
-  private isKeyboardPrev(e): boolean {
+  private isKeyboardPrev(e: any): boolean {
     return e.keyCode === 37;
   }
 
-  private isKeyboardEsc(e): boolean {
+  private isKeyboardEsc(e: any): boolean {
     return e.keyCode === 27;
   }
 
@@ -411,10 +434,13 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   private isFullscreen() {
     const doc = document as any;
 
-    return doc.fullscreenElement || doc.webkitFullscreenElement
-      || doc.mozFullScreenElement || doc.msFullscreenElement;
+    return (
+      doc.fullscreenElement ||
+      doc.webkitFullscreenElement ||
+      doc.mozFullScreenElement ||
+      doc.msFullscreenElement
+    );
   }
-
 
   private show(first = false) {
     this.loading = true;
@@ -441,14 +467,15 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     this.changeDetectorRef.markForCheck();
 
     setTimeout(() => {
-      if (this.isLoaded(this.previewImage.nativeElement) || this.type === 'video') {
+      if (
+        this.isLoaded(this.previewImage.nativeElement) ||
+        this.type === 'video'
+      ) {
         this.loading = false;
         this.startAutoPlay();
         this.changeDetectorRef.markForCheck();
       } else if (this.type === 'video') {
-
-      }
-      else {
+      } else {
         setTimeout(() => {
           if (this.loading) {
             this.showSpinner = true;
@@ -467,12 +494,11 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     });
   }
 
-  private isLoaded(img): boolean {
+  private isLoaded(img: any): boolean {
     if (!img.complete) {
       return false;
     }
 
     return !(typeof img.naturalWidth !== 'undefined' && img.naturalWidth === 0);
   }
-
 }
