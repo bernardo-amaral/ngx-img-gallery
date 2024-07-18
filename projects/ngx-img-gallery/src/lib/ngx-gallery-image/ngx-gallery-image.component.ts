@@ -9,16 +9,34 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
-import {DomSanitizer, SafeResourceUrl, SafeStyle} from '@angular/platform-browser';
-import {NgxGalleryService} from '../ngx-gallery.service';
-import {NgxGalleryOrderedImage} from '../ngx-gallery-ordered-image';
-import {NgxGalleryAction} from '../ngx-gallery-action';
-import {NgxGalleryAnimation} from '../ngx-gallery-animation';
-import {animate, AnimationEvent, state, style, transition, trigger} from '@angular/animations';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeStyle,
+} from '@angular/platform-browser';
+import { NgxGalleryService } from '../ngx-gallery.service';
+import { NgxGalleryOrderedImage } from '../ngx-gallery-ordered-image';
+import { NgxGalleryAction } from '../ngx-gallery-action';
+import { NgxGalleryAnimation } from '../ngx-gallery-animation';
+import {
+  animate,
+  AnimationEvent,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
-type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotateRight' | 'zoom' | 'none');
+type Orientation =
+  | 'slideLeft'
+  | 'slideRight'
+  | 'fade'
+  | 'rotateLeft'
+  | 'rotateRight'
+  | 'zoom'
+  | 'none';
 
 @Component({
   selector: 'ngx-gallery-image',
@@ -35,55 +53,73 @@ type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotate
       state('rotateRight', style({})),
       state('zoom', style({})),
       transition('slideRight => void', [
-        animate('500ms ease-in-out', style({transform: 'translateX(-100%)'}))
+        animate('500ms ease-in-out', style({ transform: 'translateX(-100%)' })),
       ]),
       transition('void => slideRight', [
-        style({transform: 'translateX(100%)'}),
-        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+        style({ transform: 'translateX(100%)' }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)' })),
       ]),
       transition('slideLeft => void', [
-        animate('500ms ease-in-out', style({transform: 'translateX(100%)'}))
+        animate('500ms ease-in-out', style({ transform: 'translateX(100%)' })),
       ]),
       transition('void => slideLeft', [
-        style({transform: 'translateX(-100%)'}),
-        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+        style({ transform: 'translateX(-100%)' }),
+        animate('500ms ease-in-out', style({ transform: 'translateX(0)' })),
       ]),
       transition('fade => void', [
-        animate('500ms ease-in-out', style({opacity: '0'}))
+        animate('500ms ease-in-out', style({ opacity: '0' })),
       ]),
       transition('void => fade', [
-        style({opacity: '0'}),
-        animate('500ms ease-in-out', style({opacity: '1'}))
+        style({ opacity: '0' }),
+        animate('500ms ease-in-out', style({ opacity: '1' })),
       ]),
       transition('rotateLeft => void', [
-        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(-90deg)', opacity: '0'}))
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(1, 1) rotate(-90deg)', opacity: '0' })
+        ),
       ]),
       transition('void => rotateLeft', [
-        style({transform: 'scale(1, 1) rotate(-90deg)', opacity: '0'}),
-        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(0deg)', opacity: '1'}))
+        style({ transform: 'scale(1, 1) rotate(-90deg)', opacity: '0' }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(1, 1) rotate(0deg)', opacity: '1' })
+        ),
       ]),
       transition('rotateRight => void', [
-        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(90deg)', opacity: '0'}))
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(1, 1) rotate(90deg)', opacity: '0' })
+        ),
       ]),
       transition('void => rotateRight', [
-        style({transform: 'scale(1, 1) rotate(90deg)', opacity: '0'}),
-        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(0deg)', opacity: '1'}))
+        style({ transform: 'scale(1, 1) rotate(90deg)', opacity: '0' }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(1, 1) rotate(0deg)', opacity: '1' })
+        ),
       ]),
       transition('zoom => void', [
-        animate('500ms ease-in-out', style({transform: 'scale(2.5,2.5)', opacity: '0'}))
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(2.5,2.5)', opacity: '0' })
+        ),
       ]),
       transition('void => zoom', [
-        style({transform: 'scale(2.5,2.5)', opacity: '0'}),
-        animate('500ms ease-in-out', style({transform: 'scale(1, 1)', opacity: '1'}))
+        style({ transform: 'scale(2.5,2.5)', opacity: '0' }),
+        animate(
+          '500ms ease-in-out',
+          style({ transform: 'scale(1, 1)', opacity: '1' })
+        ),
       ]),
     ]),
-  ]
+  ],
 })
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
-  @Input() images: NgxGalleryOrderedImage[];
-  @Input() clickable: boolean;
-  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
-  _selectedIndex;
+  @Input() images: NgxGalleryOrderedImage[] = [];
+  @Input() clickable: boolean = false;
+
+  _selectedIndex = 0;
   @Input()
   set selectedIndex(index: number) {
     if (index > this._selectedIndex) {
@@ -97,7 +133,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
     } else if (index < this._selectedIndex) {
       let action;
       if (this.animation === NgxGalleryAnimation.Slide) {
@@ -109,28 +145,28 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
     }
 
     this._selectedIndex = index;
   }
 
-  @Input() arrows: boolean;
-  @Input() arrowsAutoHide: boolean;
-  @Input() swipe: boolean;
-  @Input() animation: string;
-  @Input() size: string;
-  @Input() arrowPrevIcon: string;
-  @Input() arrowNextIcon: string;
-  @Input() autoPlay: boolean;
-  @Input() autoPlayInterval: number;
-  @Input() autoPlayPauseOnHover: boolean;
-  @Input() infinityMove: boolean;
-  @Input() lazyLoading: boolean;
-  @Input() actions: NgxGalleryAction[];
-  @Input() descriptions: string[];
-  @Input() showDescription: boolean;
-  @Input() bullets: boolean;
+  @Input() arrows: boolean = false;
+  @Input() arrowsAutoHide: boolean = false;
+  @Input() swipe: boolean = false;
+  @Input() animation: string = '';
+  @Input() size: string = '';
+  @Input() arrowPrevIcon: string = '';
+  @Input() arrowNextIcon: string = '';
+  @Input() autoPlay: boolean = false;
+  @Input() autoPlayInterval: number = 0;
+  @Input() autoPlayPauseOnHover: boolean = false;
+  @Input() infinityMove: boolean = false;
+  @Input() lazyLoading: boolean = false;
+  @Input() actions: NgxGalleryAction[] = [];
+  @Input() descriptions: string[] = [];
+  @Input() showDescription: boolean = false;
+  @Input() bullets: boolean = false;
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
@@ -141,16 +177,17 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   isAnimating = false;
 
-  private timer;
+  private timer: any;
 
-  constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
-              private elementRef: ElementRef, private helperService: NgxGalleryService) {
+  constructor(
+    private sanitization: DomSanitizer,
+    private changeDetectorRef: ChangeDetectorRef,
+    private elementRef: ElementRef,
+    private helperService: NgxGalleryService
+  ) {
     this.changeDetectorRef = changeDetectorRef;
     this.action = 'none';
   }
-
-  // @HostBinding('style.display') public display = 'inline-block';
-  // @HostBinding('style.background-color') public color = 'lime';
 
   ngOnInit() {
     if (this.arrows && this.arrowsAutoHide) {
@@ -164,7 +201,13 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['swipe']) {
-      this.helperService.manageSwipe(this.swipe, this.elementRef, 'image', () => this.showNext(), () => this.showPrev());
+      this.helperService.manageSwipe(
+        this.swipe,
+        this.elementRef,
+        'image',
+        () => this.showNext(),
+        () => this.showPrev()
+      );
     }
   }
 
@@ -253,7 +296,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       return;
     }
     if (index > this._selectedIndex) {
-      let action;
+      let action = 'fade';
       if (this.animation === NgxGalleryAnimation.Slide) {
         action = 'slideRight';
       } else if (this.animation === NgxGalleryAnimation.Fade) {
@@ -263,7 +306,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
     } else {
       let action;
       if (this.animation === NgxGalleryAnimation.Slide) {
@@ -275,7 +318,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
     }
 
     this._selectedIndex = index;
@@ -293,7 +336,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       return false;
     }
     if (this.canShowNext() && this.canChangeImage) {
-      let action;
+      let action = 'fade';
       if (this.animation === NgxGalleryAnimation.Slide) {
         action = 'slideRight';
       } else if (this.animation === NgxGalleryAnimation.Fade) {
@@ -303,7 +346,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
       this._selectedIndex++;
       if (this._selectedIndex === this.images.length) {
         this._selectedIndex = 0;
@@ -333,7 +376,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (this.animation === NgxGalleryAnimation.Zoom) {
         action = 'zoom';
       }
-      this.setAction(action);
+      this.setAction(action as any);
       this._selectedIndex--;
       if (this._selectedIndex < 0) {
         this._selectedIndex = this.images.length - 1;
@@ -348,8 +391,10 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     this.canChangeImage = false;
     let timeout = 1000;
 
-    if (this.animation === NgxGalleryAnimation.Slide
-      || this.animation === NgxGalleryAnimation.Fade) {
+    if (
+      this.animation === NgxGalleryAnimation.Slide ||
+      this.animation === NgxGalleryAnimation.Fade
+    ) {
       timeout = 500;
     }
 
@@ -375,7 +420,9 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   getSafeUrl(image: string | SafeResourceUrl): SafeStyle {
-    return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image.toString()));
+    return this.sanitization.bypassSecurityTrustStyle(
+      this.helperService.getBackgroundUrl(image.toString())
+    );
   }
 
   getFileType(fileSource: string) {
