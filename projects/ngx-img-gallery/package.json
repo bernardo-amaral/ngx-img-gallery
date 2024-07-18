@@ -1,9 +1,9 @@
 {
   "name": "ngx-img-gallery",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "peerDependencies": {
-    "@angular/common": "^18.1.0",
-    "@angular/core": "^18.1.0"
+    "@angular/common": "^17.3.10",
+    "@angular/core": "^17.3.10"
   },
   "dependencies": {
     "tslib": "^2.3.0"
