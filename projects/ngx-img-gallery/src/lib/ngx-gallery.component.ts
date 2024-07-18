@@ -36,7 +36,6 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() images: NgxGalleryImage[] = [];
 
   @Output() imagesReady = new EventEmitter();
-  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() change = new EventEmitter<{
     index: number;
     image: NgxGalleryImage;
@@ -55,7 +54,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   links: string[] = [];
   labels: string[] = [];
 
-  oldImages: NgxGalleryImage[] | undefined;
+  oldImages: NgxGalleryImage[] = [];
   oldImagesLength = 0;
 
   selectedIndex = 0;
@@ -68,9 +67,22 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   private prevBreakpoint: number | undefined = undefined;
   private fullWidthTimeout: any;
 
-  @ViewChild(NgxGalleryPreviewComponent) preview!: NgxGalleryPreviewComponent;
-  @ViewChild(NgxGalleryImageComponent) image!: NgxGalleryImageComponent;
-  @ViewChild(NgxGalleryThumbnailsComponent)
+  @ViewChild(NgxGalleryPreviewComponent, {
+    read: NgxGalleryPreviewComponent,
+    static: true,
+  })
+  preview!: NgxGalleryPreviewComponent;
+
+  @ViewChild(NgxGalleryImageComponent, {
+    read: NgxGalleryImageComponent,
+    static: true,
+  })
+  image!: NgxGalleryImageComponent;
+
+  @ViewChild(NgxGalleryThumbnailsComponent, {
+    read: NgxGalleryThumbnailsComponent,
+    static: true,
+  })
   thumbnails!: NgxGalleryThumbnailsComponent;
 
   @HostBinding('style.width') width: string = '';
