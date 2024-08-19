@@ -1,10 +1,18 @@
-# ngx-img-gallery
+<h1 align="center">ngx-img-gallery</h1>
 
-<div align="center">
+<p align="center">
+  <em></em>
+  <br>
+</p>
 
-![NPM Version](https://img.shields.io/npm/v/ngx-img-gallery)
-
-</div>
+<p align="center">
+  <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
+    <img src="https://img.shields.io/circleci/build/github/bernardo-amaral/ngx-img-gallery/main.svg?logo=circleci&logoColor=fff&label=CircleCI" alt="CI status" />
+  </a>&nbsp;
+  <a href="https://www.npmjs.com/package/ngx-img-gallery"> 
+    <img src="https://img.shields.io/npm/v/ngx-img-gallery/core.svg?logo=npm&logoColor=fff&label=NPM+package&color=limegreen" alt="ngx-img-gallery on npm" />
+  </a>&nbsp;
+</p>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
 
