@@ -9,8 +9,8 @@
   <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
     <img src="https://img.shields.io/circleci/build/github/bernardo-amaral/ngx-img-gallery/main.svg?logo=circleci&logoColor=fff&label=CircleCI" alt="CI status" />
   </a>&nbsp;
-  <a href="https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green"> 
-    <img src="" />
+  <a href="https://www.npmjs.com/package/ngx-img-gallery"> 
+    <img alt="NPM Version" src="https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green">
   </a>&nbsp;
 </p>
 
