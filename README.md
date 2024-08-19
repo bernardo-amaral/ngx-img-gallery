@@ -1,4 +1,4 @@
-#ngx-img-gallery
+# ngx-img-gallery
 
 <p align="center">
   <em>Builds an image gallery for angular applications</em>
