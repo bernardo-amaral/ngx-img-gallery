@@ -1,4 +1,10 @@
-# NgxImgGallery
+# ngx-img-gallery
+
+<div align="center">
+
+![NPM Version](https://img.shields.io/npm/v/ngx-img-gallery)
+
+</div>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
 
