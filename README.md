@@ -1,8 +1,7 @@
-<h1 align="center">ngx-img-gallery</h1>
+#ngx-img-gallery
 
 <p align="center">
-  <em></em>
-  <br>
+  <em>Builds an image gallery for angular applications</em>
 </p>
 
 <p align="center">
@@ -13,8 +12,6 @@
     <img alt="NPM Version" src="https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green">
   </a>
 </p>
-
-
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
