@@ -31,12 +31,15 @@ jobs:
         with:
           node-version: '20.15.1'
           registry-url: 'https://registry.npmjs.org'
+
       - name: Install dependencies
         run: npm i
+
       - name: Build 🔧
         run: npm run build
+
       - name: Publish package on NPM 📦
-        working-directory: ./dist
+        working-directory: /dist
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
