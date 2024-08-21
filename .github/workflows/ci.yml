@@ -36,7 +36,7 @@ jobs:
         run: npm i
 
       - name: Build 🔧
-        run: npm run build
+        run: ng build
 
       - name: Publish package on NPM 📦
         working-directory: ../../dist
