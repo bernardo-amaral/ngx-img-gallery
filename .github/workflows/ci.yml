@@ -36,7 +36,7 @@ jobs:
         run: npm i
 
       - name: Build 🔧
-        run: ng build
+        run: npm run build
 
       - name: Publish package on NPM 📦
         working-directory: dist/ngx-img-gallery
