@@ -1,8 +1,7 @@
 # ngx-img-gallery
 
-<p align="center">
-  <em>Builds an image gallery for angular applications</em>
-</p>
+
+### Builds an image gallery for angular applications
 
 <p align="center">
   <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
