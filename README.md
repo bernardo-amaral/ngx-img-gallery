@@ -4,6 +4,7 @@
 ### Builds an image gallery for angular applications
 
 ![ngx-img-gallery](https://github.com/bernardo-amaral/ngx-img-gallery/actions/workflows/ci.yml/badge.svg)
+![npm last version](https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green)
 
 <p align="center">
   <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
