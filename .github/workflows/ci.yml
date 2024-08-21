@@ -33,7 +33,7 @@ jobs:
           node-version: '20.15.1'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
-        run: npm ci
+        run: npm run build
       - name: Publish package on NPM 📦
         working-directory: ./dist
         run: npm publish
