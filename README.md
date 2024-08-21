@@ -3,7 +3,7 @@
 
 ### Builds an image gallery for angular applications
 
-![ngx-img-gallery](https://github.com/bernardo-amaral/ngx-img-gallery/docs/actions/workflows/ci.yml/badge.svg)
+![ngx-img-gallery](https://github.com/bernardo-amaral/ngx-img-gallery/actions/workflows/ci.yml/badge.svg)
 
 <p align="center">
   <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
