@@ -1,19 +1,10 @@
 # ngx-img-gallery
 
-
-### Builds an image gallery for angular applications
-
 ![ngx-img-gallery](https://github.com/bernardo-amaral/ngx-img-gallery/actions/workflows/ci.yml/badge.svg)
 ![npm last version](https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green)
 
-<p align="center">
-  <a href="https://circleci.com/gh/bernardo-amaral/workflows/ngx-img-gallery/tree/main">
-    <img src="https://img.shields.io/circleci/build/github/bernardo-amaral/ngx-img-gallery/main.svg?logo=circleci&logoColor=fff&label=CircleCI" alt="CI status" />
-  </a>
-  <a href="https://www.npmjs.com/package/ngx-img-gallery"> 
-    <img alt="NPM Version" src="https://img.shields.io/npm/v/ngx-img-gallery?logoColor=green&label=ngx-img-gallery&color=green">
-  </a>
-</p>
+
+### Builds an image gallery for angular applications
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
