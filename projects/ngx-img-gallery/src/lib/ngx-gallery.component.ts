@@ -97,6 +97,12 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   ngOnInit() {
     this.currentOptions = this.options;
 
+    if (Array.isArray(this.options)) {
+      this.currentOptions = this.options[0];
+    }
+
+    console.log('LIB >>>> ', this.currentOptions);
+
     if (this.currentOptions) {
       this.selectedIndex = this.currentOptions.startIndex as number;
     }
@@ -354,17 +360,6 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.width = this.currentOptions.width as string;
     this.height = this.currentOptions.height as string;
-  }
-
-  private combineOptions(
-    first: NgxGalleryOptions,
-    second: NgxGalleryOptions
-  ): void {
-    Object.keys(second).map(
-      (val) =>
-        second[val as keyof NgxGalleryOptions] ||
-        first[val as keyof NgxGalleryOptions]
-    );
   }
 
   setAnimating(event: boolean) {
