@@ -95,11 +95,11 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.currentOptions = this.options;
-
     if (Array.isArray(this.options)) {
-      this.currentOptions = this.options[0];
+      this.options = this.options[0];
     }
+
+    this.setOptions(this.options);
 
     console.log('LIB >>>> ', this.currentOptions);
 
@@ -116,7 +116,6 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     ) {
       this.oldImagesLength = this.images.length;
       this.oldImages = this.images;
-      this.setOptions();
       this.setImages();
 
       if (this.images && this.images.length) {
@@ -355,8 +354,8 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     this.labels = this.images.map((img) => img.label as string);
   }
 
-  private setOptions(): void {
-    this.currentOptions = new NgxGalleryOptions({});
+  private setOptions(options: any = {}): void {
+    this.currentOptions = new NgxGalleryOptions(options);
 
     this.width = this.currentOptions.width as string;
     this.height = this.currentOptions.height as string;
