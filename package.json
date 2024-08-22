@@ -1,6 +1,6 @@
 {
   "name": "ngx-img-gallery",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,7 +20,7 @@
     "@angular/router": "^17.3.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+    "zone.js": "0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.6",
