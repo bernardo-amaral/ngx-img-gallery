@@ -1,5 +1,4 @@
 <div class="ngx-gallery-layout {{ currentOptions.layout }}">
-  @if (currentOptions.image) {
   <ngx-gallery-image
     [style.height]="getImageHeight()"
     [images]="mediumImages"
@@ -25,7 +24,8 @@
     (activeChange)="selectFromImage($event)"
     (animating)="setAnimating($event)"
   ></ngx-gallery-image>
-  } @if (currentOptions.thumbnails) {
+  >>> {{ currentOptions.thumbnails }}
+  @if (currentOptions.thumbnails) {
   <ngx-gallery-thumbnails
     [style.marginTop]="getThumbnailsMarginTop()"
     [style.marginBottom]="getThumbnailsMarginBottom()"
