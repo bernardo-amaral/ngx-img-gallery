@@ -13,7 +13,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NgxGalleryActionComponent {
-  @Input() icon: string = '';
+  @Input() icon?: string = '';
   @Input() disabled = false;
   @Input() titleText = '';
 

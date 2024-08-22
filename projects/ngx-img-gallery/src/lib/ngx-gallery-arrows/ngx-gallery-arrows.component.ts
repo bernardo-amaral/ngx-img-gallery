@@ -16,8 +16,8 @@ import {
 export class NgxGalleryArrowsComponent {
   @Input() prevDisabled: boolean = false;
   @Input() nextDisabled: boolean = false;
-  @Input() arrowPrevIcon: string = '';
-  @Input() arrowNextIcon: string = '';
+  @Input() arrowPrevIcon?: string = '';
+  @Input() arrowNextIcon?: string = '';
 
   @Output() prevClick = new EventEmitter();
   @Output() nextClick = new EventEmitter();
