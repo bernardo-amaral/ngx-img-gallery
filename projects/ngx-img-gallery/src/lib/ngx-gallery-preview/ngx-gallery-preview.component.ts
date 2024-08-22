@@ -47,38 +47,38 @@ export class NgxGalleryPreviewComponent
 
   @Input() images: string[] | SafeResourceUrl[] = [];
   @Input() descriptions: string[] = [];
-  @Input() showDescription: boolean = false;
-  @Input() arrows: boolean = false;
-  @Input() arrowsAutoHide: boolean = false;
-  @Input() swipe: boolean = false;
-  @Input() fullscreen: boolean = false;
-  @Input() forceFullscreen: boolean = false;
-  @Input() closeOnClick: boolean = false;
-  @Input() closeOnEsc: boolean = false;
-  @Input() keyboardNavigation: boolean = false;
-  @Input() arrowPrevIcon: string = '';
-  @Input() arrowNextIcon: string = '';
-  @Input() closeIcon: string = '';
-  @Input() fullscreenIcon: string = '';
-  @Input() spinnerIcon: string = '';
-  @Input() autoPlay: boolean = false;
-  @Input() autoPlayInterval: number = 0;
-  @Input() autoPlayPauseOnHover: boolean = false;
-  @Input() infinityMove: boolean = false;
-  @Input() zoom: boolean = false;
-  @Input() zoomStep: number = 0;
-  @Input() zoomMax: number = 0;
-  @Input() zoomMin: number = 0;
-  @Input() zoomInIcon: string = '';
-  @Input() zoomOutIcon: string = '';
-  @Input() animation: boolean = false;
-  @Input() actions: NgxGalleryAction[] = [];
-  @Input() rotate: boolean = false;
-  @Input() rotateLeftIcon: string = '';
-  @Input() rotateRightIcon: string = '';
-  @Input() download: boolean = false;
-  @Input() downloadIcon: string = '';
-  @Input() bullets: boolean = false;
+  @Input() showDescription?: boolean = false;
+  @Input() arrows?: boolean = false;
+  @Input() arrowsAutoHide?: boolean = false;
+  @Input() swipe?: boolean = false;
+  @Input() fullscreen?: boolean = false;
+  @Input() forceFullscreen?: boolean = false;
+  @Input() closeOnClick?: boolean = false;
+  @Input() closeOnEsc?: boolean = false;
+  @Input() keyboardNavigation?: boolean = false;
+  @Input() arrowPrevIcon?: string = '';
+  @Input() arrowNextIcon?: string = '';
+  @Input() closeIcon?: string = '';
+  @Input() fullscreenIcon?: string = '';
+  @Input() spinnerIcon?: string = '';
+  @Input() autoPlay?: boolean = false;
+  @Input() autoPlayInterval?: number = 0;
+  @Input() autoPlayPauseOnHover?: boolean = false;
+  @Input() infinityMove?: boolean = false;
+  @Input() zoom?: boolean = false;
+  @Input() zoomStep?: number = 0;
+  @Input() zoomMax?: number = 0;
+  @Input() zoomMin?: number = 0;
+  @Input() zoomInIcon?: string = '';
+  @Input() zoomOutIcon?: string = '';
+  @Input() animation?: boolean = false;
+  @Input() actions?: NgxGalleryAction[] = [];
+  @Input() rotate?: boolean = false;
+  @Input() rotateLeftIcon?: string = '';
+  @Input() rotateRightIcon?: string = '';
+  @Input() download?: boolean = false;
+  @Input() downloadIcon?: string = '';
+  @Input() bullets?: boolean = false;
 
   @Output() previewOpen = new EventEmitter();
   @Output() previewClose = new EventEmitter();
@@ -113,7 +113,7 @@ export class NgxGalleryPreviewComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['swipe']) {
       this.helperService.manageSwipe(
-        this.swipe,
+        this.swipe || false,
         this.elementRef,
         'preview',
         () => this.showNext(),
@@ -302,20 +302,20 @@ export class NgxGalleryPreviewComponent
 
   zoomIn(): void {
     if (this.canZoomIn()) {
-      this.zoomValue += this.zoomStep;
+      this.zoomValue += this.zoomStep || 0;
 
-      if (this.zoomValue > this.zoomMax) {
-        this.zoomValue = this.zoomMax;
+      if (this.zoomValue > (this.zoomMax || 0)) {
+        this.zoomValue = this.zoomMax || 0;
       }
     }
   }
 
   zoomOut(): void {
     if (this.canZoomOut()) {
-      this.zoomValue -= this.zoomStep;
+      this.zoomValue -= this.zoomStep || 0;
 
-      if (this.zoomValue < this.zoomMin) {
-        this.zoomValue = this.zoomMin;
+      if (this.zoomValue < (this.zoomMin || 0)) {
+        this.zoomValue = this.zoomMin || 0;
       }
 
       if (this.zoomValue <= 1) {
@@ -339,11 +339,11 @@ export class NgxGalleryPreviewComponent
   }
 
   canZoomIn(): boolean {
-    return this.zoomValue < this.zoomMax;
+    return this.zoomValue < (this.zoomMax || 0);
   }
 
   canZoomOut(): boolean {
-    return this.zoomValue > this.zoomMin;
+    return this.zoomValue > (this.zoomMin || 0);
   }
 
   canDragOnZoom() {

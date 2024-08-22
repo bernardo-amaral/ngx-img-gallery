@@ -34,26 +34,26 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   minStopIndex = 0;
 
   @Input() images: string[] | SafeResourceUrl[] = [];
-  @Input() isAnimating: boolean = false;
-  @Input() links: string[] = [];
-  @Input() labels: string[] = [];
-  @Input() linkTarget: string = '';
-  @Input() columns: number = 0;
-  @Input() rows: number = 0;
-  @Input() arrows: boolean = false;
-  @Input() arrowsAutoHide: boolean = false;
-  @Input() margin: number = 0;
+  @Input() isAnimating?: boolean = false;
+  @Input() links?: string[] = [];
+  @Input() labels?: string[] = [];
+  @Input() linkTarget?: string = '';
+  @Input() columns?: number = 0;
+  @Input() rows?: number = 0;
+  @Input() arrows?: boolean = false;
+  @Input() arrowsAutoHide?: boolean = false;
+  @Input() margin?: number = 0;
   @Input() selectedIndex: number = 0;
-  @Input() clickable: boolean = false;
-  @Input() swipe: boolean = false;
-  @Input() size: string = '';
-  @Input() arrowPrevIcon: string = '';
-  @Input() arrowNextIcon: string = '';
-  @Input() moveSize: number = 0;
-  @Input() order: number = 0;
-  @Input() remainingCount: boolean = false;
-  @Input() lazyLoading: boolean = false;
-  @Input() actions: NgxGalleryAction[] = [];
+  @Input() clickable?: boolean = false;
+  @Input() swipe?: boolean = false;
+  @Input() size?: string = '';
+  @Input() arrowPrevIcon?: string = '';
+  @Input() arrowNextIcon?: string = '';
+  @Input() moveSize?: number = 0;
+  @Input() order?: number = 0;
+  @Input() remainingCount?: boolean = false;
+  @Input() lazyLoading?: boolean = false;
+  @Input() actions?: NgxGalleryAction[] = [];
 
   @Output() activeChange = new EventEmitter();
 
@@ -72,7 +72,7 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
 
     if (changes['swipe']) {
       this.helperService.manageSwipe(
-        this.swipe,
+        this.swipe || false,
         this.elementRef,
         'thumbnails',
         () => this.moveRight(),
@@ -81,7 +81,8 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
     }
 
     if (this.images) {
-      this.remainingCountValue = this.images.length - this.rows * this.columns;
+      this.remainingCountValue =
+        this.images.length - (this.rows || 0) * (this.columns || 0);
     }
   }
 
@@ -107,14 +108,16 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
     }
 
     if (this.remainingCount) {
-      return this.images.slice(0, this.rows * this.columns);
+      return this.images.slice(0, (this.rows || 0) * (this.columns || 0));
     } else if (this.lazyLoading && this.order !== NgxGalleryOrder.Row) {
       let stopIndex = 0;
 
       if (this.order === NgxGalleryOrder.Column) {
-        stopIndex = (this.index + this.columns + this.moveSize) * this.rows;
+        stopIndex =
+          (this.index + (this.columns || 0) + (this.moveSize || 0)) *
+          (this.rows || 0);
       } else if (this.order === NgxGalleryOrder.Page) {
-        stopIndex = this.index + this.columns * this.rows * 2;
+        stopIndex = this.index + (this.columns || 0) * (this.rows || 0) * 2;
       }
 
       if (stopIndex <= this.minStopIndex) {
@@ -144,8 +147,8 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
 
   moveRight(): void {
     if (this.canMoveRight()) {
-      this.index += this.moveSize;
-      const maxIndex = this.getMaxIndex() - this.columns;
+      this.index += this.moveSize || 0;
+      const maxIndex = this.getMaxIndex() - (this.columns || 0);
 
       if (this.index > maxIndex) {
         this.index = maxIndex;
@@ -157,7 +160,7 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
 
   moveLeft(): void {
     if (this.canMoveLeft()) {
-      this.index -= this.moveSize;
+      this.index -= this.moveSize || 0;
 
       if (this.index < 0) {
         this.index = 0;
@@ -168,7 +171,7 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   }
 
   canMoveRight(): boolean {
-    return this.index + this.columns < this.getMaxIndex();
+    return this.index + (this.columns || 0) < this.getMaxIndex();
   }
 
   canMoveLeft(): boolean {
@@ -179,54 +182,59 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
-      calculatedIndex = Math.floor(index / this.rows);
+      calculatedIndex = Math.floor(index / (this.rows || 0));
     } else if (this.order === NgxGalleryOrder.Page) {
       calculatedIndex =
-        (index % this.columns) +
-        Math.floor(index / (this.rows * this.columns)) * this.columns;
+        (index % (this.columns || 0)) +
+        Math.floor(index / ((this.rows || 0) * (this.columns || 0))) *
+          (this.columns || 0);
     } else if (this.order === NgxGalleryOrder.Row && this.remainingCount) {
-      calculatedIndex = index % this.columns;
+      calculatedIndex = index % (this.columns || 0);
     } else {
-      calculatedIndex = index % Math.ceil(this.images.length / this.rows);
+      calculatedIndex =
+        index % Math.ceil(this.images.length / (this.rows || 0));
     }
 
-    return this.getThumbnailPosition(calculatedIndex, this.columns);
+    return this.getThumbnailPosition(calculatedIndex, this.columns || 0);
   }
 
   getThumbnailTop(index: number): SafeStyle {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
-      calculatedIndex = index % this.rows;
+      calculatedIndex = index % (this.rows || 0);
     } else if (this.order === NgxGalleryOrder.Page) {
       calculatedIndex =
-        Math.floor(index / this.columns) -
-        Math.floor(index / (this.rows * this.columns)) * this.rows;
+        Math.floor(index / (this.columns || 0)) -
+        Math.floor(index / ((this.rows || 0) * (this.columns || 0))) *
+          (this.rows || 0);
     } else if (this.order === NgxGalleryOrder.Row && this.remainingCount) {
-      calculatedIndex = Math.floor(index / this.columns);
+      calculatedIndex = Math.floor(index / (this.columns || 0));
     } else {
       calculatedIndex = Math.floor(
-        index / Math.ceil(this.images.length / this.rows)
+        index / Math.ceil(this.images.length / (this.rows || 0))
       );
     }
 
-    return this.getThumbnailPosition(calculatedIndex, this.rows);
+    return this.getThumbnailPosition(calculatedIndex, this.rows || 0);
   }
 
   getThumbnailWidth(): SafeStyle {
-    return this.getThumbnailDimension(this.columns);
+    return this.getThumbnailDimension(this.columns || 0);
   }
 
   getThumbnailHeight(): SafeStyle {
-    return this.getThumbnailDimension(this.rows);
+    return this.getThumbnailDimension(this.rows || 0);
   }
 
   setThumbnailsPosition(): void {
-    this.thumbnailsLeft = -((100 / this.columns) * this.index) + '%';
+    this.thumbnailsLeft = -((100 / (this.columns || 0)) * this.index) + '%';
 
     this.thumbnailsMarginLeft =
       -(
-        (this.margin - ((this.columns - 1) * this.margin) / this.columns) *
+        ((this.margin || 0) -
+          (((this.columns || 0) - 1) * (this.margin || 0)) /
+            (this.columns || 0)) *
         this.index
       ) + 'px';
   }
@@ -239,14 +247,14 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   canShowArrows(): boolean {
     if (this.remainingCount) {
       return false;
-    } else {
-      return (
-        this.arrows &&
+    }
+    return (
+      (this.arrows &&
         this.images &&
         this.images.length > this.getVisibleCount() &&
-        (!this.arrowsAutoHide || this.mouseenter)
-      );
-    }
+        (!this.arrowsAutoHide || this.mouseenter)) ||
+      false
+    );
   }
 
   validateIndex(): void {
@@ -254,18 +262,21 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
       let newIndex;
 
       if (this.order === NgxGalleryOrder.Column) {
-        newIndex = Math.floor(this.selectedIndex / this.rows);
+        newIndex = Math.floor(this.selectedIndex / (this.rows || 0));
       } else {
         newIndex =
-          this.selectedIndex % Math.ceil(this.images.length / this.rows);
+          this.selectedIndex % Math.ceil(this.images.length / (this.rows || 0));
       }
 
       if (this.remainingCount) {
         newIndex = 0;
       }
 
-      if (newIndex < this.index || newIndex >= this.index + this.columns) {
-        const maxIndex = this.getMaxIndex() - this.columns;
+      if (
+        newIndex < this.index ||
+        newIndex >= this.index + (this.columns || 0)
+      ) {
+        const maxIndex = this.getMaxIndex() - (this.columns || 0);
         this.index = newIndex > maxIndex ? maxIndex : newIndex;
 
         this.setThumbnailsPosition();
@@ -288,7 +299,8 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
       'calc(' +
         (100 / count) * index +
         '% + ' +
-        (this.margin - ((count - 1) * this.margin) / count) * index +
+        ((this.margin || 0) - ((count - 1) * (this.margin || 0)) / count) *
+          index +
         'px)'
     );
   }
@@ -299,7 +311,7 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
         'calc(' +
           100 / count +
           '% - ' +
-          ((count - 1) * this.margin) / count +
+          ((count - 1) * (this.margin || 0)) / count +
           'px)'
       );
     } else {
@@ -310,22 +322,23 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   private getMaxIndex(): number {
     if (this.order === NgxGalleryOrder.Page) {
       let maxIndex =
-        Math.floor(this.images.length / this.getVisibleCount()) * this.columns;
+        Math.floor(this.images.length / this.getVisibleCount()) *
+        (this.columns || 0);
 
-      if (this.images.length % this.getVisibleCount() > this.columns) {
-        maxIndex += this.columns;
+      if (this.images.length % this.getVisibleCount() > (this.columns || 0)) {
+        maxIndex += this.columns || 0;
       } else {
         maxIndex += this.images.length % this.getVisibleCount();
       }
 
       return maxIndex;
     } else {
-      return Math.ceil(this.images.length / this.rows);
+      return Math.ceil(this.images.length / (this.rows || 0));
     }
   }
 
   private getVisibleCount(): number {
-    return this.columns * this.rows;
+    return (this.columns || 0) * (this.rows || 0);
   }
 
   private getSafeStyle(value: string): SafeStyle {

@@ -117,7 +117,7 @@ type Orientation =
 })
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[] = [];
-  @Input() clickable: boolean = false;
+  @Input() clickable?: boolean = false;
 
   _selectedIndex = 0;
   @Input()
@@ -151,22 +151,22 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     this._selectedIndex = index;
   }
 
-  @Input() arrows: boolean = false;
-  @Input() arrowsAutoHide: boolean = false;
-  @Input() swipe: boolean = false;
-  @Input() animation: string = '';
-  @Input() size: string = '';
-  @Input() arrowPrevIcon: string = '';
-  @Input() arrowNextIcon: string = '';
-  @Input() autoPlay: boolean = false;
-  @Input() autoPlayInterval: number = 0;
-  @Input() autoPlayPauseOnHover: boolean = false;
-  @Input() infinityMove: boolean = false;
-  @Input() lazyLoading: boolean = false;
-  @Input() actions: NgxGalleryAction[] = [];
+  @Input() arrows?: boolean = false;
+  @Input() arrowsAutoHide?: boolean = false;
+  @Input() swipe?: boolean = false;
+  @Input() animation?: string = '';
+  @Input() size?: string = '';
+  @Input() arrowPrevIcon?: string = '';
+  @Input() arrowNextIcon?: string = '';
+  @Input() autoPlay?: boolean = false;
+  @Input() autoPlayInterval?: number = 0;
+  @Input() autoPlayPauseOnHover?: boolean = false;
+  @Input() infinityMove?: boolean = false;
+  @Input() lazyLoading?: boolean = false;
+  @Input() actions?: NgxGalleryAction[] = [];
   @Input() descriptions: string[] = [];
-  @Input() showDescription: boolean = false;
-  @Input() bullets: boolean = false;
+  @Input() showDescription?: boolean = false;
+  @Input() bullets?: boolean = false;
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
@@ -202,7 +202,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['swipe']) {
       this.helperService.manageSwipe(
-        this.swipe,
+        this.swipe || false,
         this.elementRef,
         'image',
         () => this.showNext(),
