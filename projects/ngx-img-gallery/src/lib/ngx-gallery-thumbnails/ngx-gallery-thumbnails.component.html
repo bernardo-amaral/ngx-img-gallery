@@ -7,7 +7,7 @@
     [style.marginLeft]="thumbnailsMarginLeft"
   >
     <a
-      [href]="hasLink(i) ? links[i] : '#'"
+      [href]="links && hasLink(i) ? links[i] : '#'"
       [target]="linkTarget"
       class="ngx-gallery-thumbnail"
       *ngFor="let image of getImages(); let i = index"
@@ -20,7 +20,7 @@
         'ngx-gallery-active': i === selectedIndex,
         'ngx-gallery-clickable': clickable
       }"
-      [attr.aria-label]="labels[i]"
+      [attr.aria-label]="labels ? labels[i] : ''"
     >
       <div
         *ngIf="getFileType(image) === 'image'"
@@ -63,16 +63,14 @@
           (closeClick)="action.onClick($event, i)"
         ></ngx-gallery-action>
       </div>
-      <div
-        class="ngx-gallery-remaining-count-overlay"
-        *ngIf="
-          remainingCount && remainingCountValue && i === rows * columns - 1
-        "
-      >
+      @if (remainingCount && remainingCountValue && i === (rows || 0) * (columns
+      || 0) - 1) {
+      <div class="ngx-gallery-remaining-count-overlay">
         <span class="ngx-gallery-remaining-count"
           >+{{ remainingCountValue }}</span
         >
       </div>
+      }
     </a>
   </div>
 </div>
