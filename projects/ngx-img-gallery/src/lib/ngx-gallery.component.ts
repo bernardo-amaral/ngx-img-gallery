@@ -101,8 +101,6 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
     this.setOptions(this.options);
 
-    console.log('LIB >>>> ', this.currentOptions);
-
     if (this.currentOptions) {
       this.selectedIndex = this.currentOptions.startIndex as number;
     }

@@ -164,8 +164,6 @@ export class NgxGalleryOptions implements INgxGalleryOptions {
         : defaultValue;
     }
 
-    console.log('OBJ >>> ', obj.thumbnails);
-
     this.breakpoint = use(obj.breakpoint, undefined);
     this.width = use(obj.width, '500px');
     this.height = use(obj.height, '400px');
@@ -263,7 +261,5 @@ export class NgxGalleryOptions implements INgxGalleryOptions {
       obj.actions = obj.actions.map((action) => new NgxGalleryAction(action));
     }
     this.actions = use(obj.actions, []);
-
-    console.log('OBJ END >>> ', this.thumbnails);
   }
 }
